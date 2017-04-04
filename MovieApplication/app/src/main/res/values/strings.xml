@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">My Movie Application</string>
+    <string name="text_popularity">Popularity: </string>
+</resources>
