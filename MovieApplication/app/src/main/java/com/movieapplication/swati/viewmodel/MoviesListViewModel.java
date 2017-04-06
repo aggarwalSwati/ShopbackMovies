@@ -1,8 +1,11 @@
 package com.movieapplication.swati.viewmodel;
 
+import android.app.Activity;
 import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.BindingAdapter;
+import android.os.Build;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
@@ -24,6 +27,8 @@ import application.movie.swati.com.movieapplication.R;
 public class MoviesListViewModel extends BaseObservable {
 
 	static Context context;
+	private String imageBaseUrl = "https://image.tmdb.org/t/p/w780";
+
 	MoviesModel mMovie;
 
 	public MoviesListViewModel(Context context, MoviesModel mMovie) {
@@ -55,11 +60,11 @@ public class MoviesListViewModel extends BaseObservable {
 
 	public String getImageUrl() {
 		// The URL will usually come from a model
-		String url = "";
-		if (null == mMovie.backdrop_path) {
+		String url = mMovie.backdrop_path;
+		if (url == null || url.equalsIgnoreCase("")) {
 			url = mMovie.poster_path == null ? "" : mMovie.poster_path;
 		}
-		return "https://image.tmdb.org/t/p/w780" + url;
+		return imageBaseUrl + url;
 	}
 
 	@BindingAdapter({"bind:imageUrl"})
@@ -79,14 +84,24 @@ public class MoviesListViewModel extends BaseObservable {
 
 			@Override
 			public void onClick(View v) {
-				launchMovieDetailActivity();
+				launchMovieDetailActivity(v);
 			}
 		};
 	}
 
-	private void launchMovieDetailActivity() {
-		context.startActivity(
-				MoviesDetailActivity.getStartIntent(context, mMovie));
+	private void launchMovieDetailActivity(View v) {
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			ActivityOptionsCompat options = ActivityOptionsCompat
+					.makeSceneTransitionAnimation((Activity) context, v, "movies_image");
+			context.startActivity(
+					MoviesDetailActivity.getStartIntent(context, mMovie),
+					options.toBundle());
+		} else {
+			context.startActivity(
+					MoviesDetailActivity.getStartIntent(context, mMovie));
+		}
+
 	}
 
 }

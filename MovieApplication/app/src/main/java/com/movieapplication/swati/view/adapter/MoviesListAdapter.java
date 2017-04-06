@@ -10,6 +10,8 @@ import com.movieapplication.swati.model.MoviesListModel;
 import com.movieapplication.swati.model.MoviesModel;
 import com.movieapplication.swati.viewmodel.MoviesListViewModel;
 
+import java.util.List;
+
 import application.movie.swati.com.movieapplication.R;
 import application.movie.swati.com.movieapplication.databinding.LayoutItemMovieBinding;
 
@@ -17,9 +19,7 @@ import application.movie.swati.com.movieapplication.databinding.LayoutItemMovieB
  * Created by aggarwal.swati on 4/3/17.
  */
 
-public class MoviesListAdapter
-		extends
-			RecyclerView.Adapter<MoviesListAdapter.AdapterViewHolder> {
+public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.AdapterViewHolder> {
 
 	MoviesListModel moviesList;
 
@@ -30,19 +30,18 @@ public class MoviesListAdapter
 	}
 
 	@Override
-	public AdapterViewHolder onCreateViewHolder(ViewGroup parent,
-			int viewType) {
-		LayoutItemMovieBinding databinding = DataBindingUtil.inflate(
-				LayoutInflater.from(parent.getContext()),
-				R.layout.layout_item_movie, parent, false);
+	public AdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+		LayoutItemMovieBinding databinding = DataBindingUtil
+				.inflate(LayoutInflater.from(parent.getContext()), R.layout.layout_item_movie,
+						parent, false);
 		return new AdapterViewHolder(databinding);
 	}
 
 	@Override
 	public void onBindViewHolder(AdapterViewHolder holder, int position) {
 		LayoutItemMovieBinding postBinding = holder.itemPostbinding;
-		postBinding.setViewModel(new MoviesListViewModel(mContext,
-				moviesList.getMoviesModel().get(position)));
+		postBinding.setViewModel(
+				new MoviesListViewModel(mContext, moviesList.getMoviesModel().get(position)));
 	}
 
 	@Override
@@ -54,7 +53,6 @@ public class MoviesListAdapter
 	}
 
 	public void setItems(MoviesListModel list) {
-
 		moviesList = list;
 		notifyDataSetChanged();
 	}
@@ -66,6 +64,18 @@ public class MoviesListAdapter
 			notifyItemInserted(moviesList.getMoviesModel().size() - 1);
 		}
 
+	}
+
+	public void clearList() {
+		moviesList.getMoviesModel().clear();
+	}
+
+	public List<MoviesModel> getAdapterData() {
+		if (null != moviesList) {
+			return moviesList.getMoviesModel();
+		} else {
+			return null;
+		}
 	}
 
 	public static class AdapterViewHolder extends RecyclerView.ViewHolder {

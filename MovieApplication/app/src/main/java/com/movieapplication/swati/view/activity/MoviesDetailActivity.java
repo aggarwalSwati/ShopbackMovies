@@ -37,4 +37,10 @@ public class MoviesDetailActivity extends AppCompatActivity {
 		getSupportFragmentManager().beginTransaction().replace(R.id.activity_main, detailFragment)
 				.commit();
 	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		supportFinishAfterTransition();
+	}
 }

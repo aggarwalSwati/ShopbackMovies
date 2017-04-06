@@ -13,8 +13,6 @@ public class RetrofitHelperClass {
 	public MoviesFetchService newFetchService(){
 		RestAdapter restAdapter = new RestAdapter.Builder()
 				.setEndpoint(MoviesFetchService.ENDPOINT)
-				.setLogLevel(RestAdapter.LogLevel.FULL)
-
 				.setConverter(new GsonConverter(new GsonBuilder().create()))
 				.build();
 		return restAdapter.create(MoviesFetchService.class);

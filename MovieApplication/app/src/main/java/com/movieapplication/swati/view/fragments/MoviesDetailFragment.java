@@ -71,6 +71,7 @@ public class MoviesDetailFragment extends Fragment {
 		((AppCompatActivity) getActivity()).setSupportActionBar(databinding.toolbar);
 		ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
 		actionBar.setTitle(selectedMovieObj.title);
+		databinding.toolbar.setTitleTextColor(getResources().getColor(R.color.white));
 		if (actionBar != null) {
 			actionBar.setDisplayShowTitleEnabled(true);
 		}

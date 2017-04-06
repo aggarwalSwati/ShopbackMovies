@@ -33,11 +33,13 @@ import rx.subscriptions.CompositeSubscription;
  * Created by aggarwal.swati on 4/4/17.
  */
 
-public class MovieDetailViewModel extends BaseObservable implements BaseViewModel {
+public class MovieDetailViewModel extends BaseObservable
+		implements
+			BaseViewModel {
 
 	static Context context;
 	private final int id;
-
+	private String imageBaseUrl = "https://image.tmdb.org/t/p/w780";
 	MoviesModel moviesObj;
 
 	public void setMovieDetail(MovieDetail movieDetail) {
@@ -60,20 +62,23 @@ public class MovieDetailViewModel extends BaseObservable implements BaseViewMode
 	}
 
 	public String getMovieDuration() {
-		return null == movieDetail.get() ? "" : movieDetail.get().runtime + " mins";
+		return null == movieDetail.get()
+				? ""
+				: movieDetail.get().runtime + " mins";
 	}
 
 	public SpannableStringBuilder getMovieGenres() {
 		SpannableStringBuilder longDescription = new SpannableStringBuilder();
 		if (null != movieDetail.get()) {
-			if (null != movieDetail.get().genres && movieDetail.get().genres.size() > 0) {
+			if (null != movieDetail.get().genres
+					&& movieDetail.get().genres.size() > 0) {
 				for (int i = 0; i < movieDetail.get().genres.size(); i++) {
 					if (i > 0) {
 						longDescription.append(" | ");
 
 					}
-					longDescription.append(movieDetail.get().genres.get(i).name);
-
+					longDescription
+							.append(movieDetail.get().genres.get(i).name);
 
 				}
 			}
@@ -84,18 +89,19 @@ public class MovieDetailViewModel extends BaseObservable implements BaseViewMode
 	public SpannableStringBuilder getMovieSpokenLanguages() {
 		SpannableStringBuilder longDescription = new SpannableStringBuilder();
 		if (null != movieDetail.get()) {
-			if (null != movieDetail.get().spoken_languages &&
-					movieDetail.get().spoken_languages.size() > 0) {
-				for (int i = 0; i < movieDetail.get().spoken_languages.size(); i++) {
-					if (i > 0 &&
-							!TextUtils.isEmpty(longDescription)) {
+			if (null != movieDetail.get().spoken_languages
+					&& movieDetail.get().spoken_languages.size() > 0) {
+				for (int i = 0; i < movieDetail.get().spoken_languages
+						.size(); i++) {
+					if (i > 0 && !TextUtils.isEmpty(longDescription)) {
 						longDescription.append(" | ");
 
 					}
-					if (!TextUtils.isEmpty(movieDetail.get().spoken_languages.get(i).name)) {
-						longDescription.append(movieDetail.get().spoken_languages.get(i).name);
+					if (!TextUtils.isEmpty(
+							movieDetail.get().spoken_languages.get(i).name)) {
+						longDescription.append(
+								movieDetail.get().spoken_languages.get(i).name);
 					}
-
 
 				}
 			}
@@ -104,15 +110,19 @@ public class MovieDetailViewModel extends BaseObservable implements BaseViewMode
 	}
 
 	public int getRuntimeVisibility() {
-		if (null != movieDetail.get() && !TextUtils.isEmpty(movieDetail.get().runtime)) {
-			return movieDetail.get().runtime.equalsIgnoreCase("0") ? View.GONE : View.VISIBLE;
+		if (null != movieDetail.get()
+				&& !TextUtils.isEmpty(movieDetail.get().runtime)) {
+			return movieDetail.get().runtime.equalsIgnoreCase("0")
+					? View.GONE
+					: View.VISIBLE;
 		} else {
 			return View.GONE;
 		}
 	}
 
 	public int getOverviewVisibility() {
-		if (null != movieDetail.get() && !TextUtils.isEmpty(movieDetail.get().overview)) {
+		if (null != movieDetail.get()
+				&& !TextUtils.isEmpty(movieDetail.get().overview)) {
 			return View.VISIBLE;
 		} else {
 			return View.GONE;
@@ -120,8 +130,9 @@ public class MovieDetailViewModel extends BaseObservable implements BaseViewMode
 	}
 
 	public int getLanguagesVisibility() {
-		if (null != movieDetail.get() && null != movieDetail.get().spoken_languages &&
-				movieDetail.get().spoken_languages.size() != 0) {
+		if (null != movieDetail.get()
+				&& null != movieDetail.get().spoken_languages
+				&& movieDetail.get().spoken_languages.size() != 0) {
 			return View.VISIBLE;
 		} else {
 			return View.GONE;
@@ -129,8 +140,8 @@ public class MovieDetailViewModel extends BaseObservable implements BaseViewMode
 	}
 
 	public int getGenresVisibility() {
-		if (null != movieDetail.get() && null != movieDetail.get().genres &&
-				movieDetail.get().genres.size() != 0) {
+		if (null != movieDetail.get() && null != movieDetail.get().genres
+				&& movieDetail.get().genres.size() != 0) {
 			return View.VISIBLE;
 		} else {
 			return View.GONE;
@@ -139,38 +150,42 @@ public class MovieDetailViewModel extends BaseObservable implements BaseViewMode
 
 	public SpannableStringBuilder getMoviePopularity() {
 		SpannableStringBuilder longDescription = new SpannableStringBuilder();
-		longDescription.append(context.getString(R.string.text_popularity) + "  ");
+		longDescription
+				.append(context.getString(R.string.text_popularity) + "  ");
 
 		String popularity = String.format("%.2f", moviesObj.popularity);
 		int start = longDescription.length();
 		longDescription.append(popularity);
-		longDescription
-				.setSpan(new ForegroundColorSpan(0xFFCC5500), start, longDescription.length(),
-						Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-		longDescription.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), start,
+		longDescription.setSpan(new ForegroundColorSpan(0xFFCC5500), start,
 				longDescription.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		longDescription.setSpan(new StyleSpan(android.graphics.Typeface.BOLD),
+				start, longDescription.length(),
+				Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
 		return longDescription;
 	}
 
 	public String getImageUrl() {
 		// The URL will usually come from a model
-		String url = "";
-		if (null == moviesObj.backdrop_path) {
-			url = moviesObj.poster_path == null ? "" : moviesObj.poster_path;
+		if (null != movieDetail.get()) {
+			String url = movieDetail.get().backdrop_path;
+			if (null == movieDetail.get().backdrop_path) {
+				url = movieDetail.get().poster_path == null ? "" : movieDetail.get().poster_path;
+			}
+			return imageBaseUrl + url;
 		}
-		return "https://image.tmdb.org/t/p/w780" + url;
+		return "";
 	}
 
-	@BindingAdapter({"bind:imageUrl"})
+	@BindingAdapter(("android:src"))
 	public static void loadImage(ImageView view, String imageUrl) {
-		Glide.with(context).load(imageUrl).crossFade().diskCacheStrategy(DiskCacheStrategy.ALL)
-				.placeholder(R.drawable.movie_placeholder).error(R.drawable.movie_placeholder)
-				.into(view);
+		Glide.with(context).load(imageUrl).crossFade()
+				.diskCacheStrategy(DiskCacheStrategy.ALL).centerCrop()
+				.placeholder(R.drawable.movie_placeholder)
+				.error(R.drawable.movie_placeholder).into(view);
 	}
-
 	public String getMoviePoster() {
-		return moviesObj.backdrop_path;
+		return movieDetail.get().backdrop_path;
 	}
 
 	@Inject
@@ -198,10 +213,11 @@ public class MovieDetailViewModel extends BaseObservable implements BaseViewMode
 
 	private void getSelectedMoviesDetail() {
 		mSubscriptions = new CompositeSubscription();
-		DataManager mDataManager =
-				MovieApplication.get(context).getmApplicationComponent().dataManager();
+		DataManager mDataManager = MovieApplication.get(context)
+				.getmApplicationComponent().dataManager();
 		mSubscriptions.add(mDataManager.getSelectedMovieDetail(this.id)
-				.observeOn(AndroidSchedulers.mainThread()).subscribeOn(mDataManager.getScheduler())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribeOn(mDataManager.getScheduler())
 				.subscribe(new Subscriber<MovieDetail>() {
 
 					@Override
@@ -211,7 +227,8 @@ public class MovieDetailViewModel extends BaseObservable implements BaseViewMode
 					@Override
 					public void onError(Throwable e) {
 						e.printStackTrace();
-						Toast.makeText(context, "Error while loading", Toast.LENGTH_SHORT).show();
+						Toast.makeText(context, "Error while loading",
+								Toast.LENGTH_SHORT).show();
 
 					}
 
@@ -219,7 +236,6 @@ public class MovieDetailViewModel extends BaseObservable implements BaseViewMode
 					public void onNext(MovieDetail movieDetail) {
 						setMovieDetail(movieDetail);
 						notifyChange();
-						//						viewDetailModel.setMovieDetail(movieDetail);
 					}
 
 				}));
