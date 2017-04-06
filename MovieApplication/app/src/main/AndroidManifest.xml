@@ -23,6 +23,9 @@
         <activity android:name="com.movieapplication.swati.view.activity.MoviesDetailActivity"
                   android:theme="@style/AppTheme.NoActionBar"
         ></activity>
+        <activity android:name="com.movieapplication.swati.view.activity.WebViewBookNowActivity"
+                  android:theme="@style/AppTheme.NoActionBar"
+        ></activity>
     </application>
 
 </manifest>

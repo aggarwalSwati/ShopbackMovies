@@ -1,6 +1,7 @@
 package com.movieapplication.swati.viewmodel;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.BindingAdapter;
 import android.databinding.ObservableField;
@@ -19,6 +20,7 @@ import com.movieapplication.swati.MovieApplication;
 import com.movieapplication.swati.data.DataManager;
 import com.movieapplication.swati.model.MovieDetail;
 import com.movieapplication.swati.model.MoviesModel;
+import com.movieapplication.swati.view.activity.WebViewBookNowActivity;
 
 import javax.inject.Inject;
 
@@ -177,6 +179,21 @@ public class MovieDetailViewModel extends BaseObservable implements BaseViewMode
 		this.context = context;
 		moviesObj = moviesModel;
 		getSelectedMoviesDetail();
+	}
+
+	public View.OnClickListener onBookNow() {
+		return new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				launchBookNowUrl();
+			}
+		};
+	}
+
+	private void launchBookNowUrl() {
+		Intent intent = new Intent(context, WebViewBookNowActivity.class);
+		context.startActivity(intent);
 	}
 
 	private void getSelectedMoviesDetail() {

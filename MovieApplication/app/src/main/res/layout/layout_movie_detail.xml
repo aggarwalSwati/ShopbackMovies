@@ -26,8 +26,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/bg_light_grey"
-        >
+            android:background="@color/bg_light_grey">
 
 
             <RelativeLayout
@@ -61,23 +60,40 @@
                         android:textColor="@color/grey_text"
                         android:textSize="17sp"
                         android:textStyle="bold"/>
-                    <TextView
-                        android:id="@+id/text_popularity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:bufferType="spannable"
-                        android:text="@{viewModel.moviePopularity}"
-                        android:textColor="@color/green"
-                        android:textSize="14sp"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/text_popularity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:bufferType="spannable"
+                            android:text="@{viewModel.moviePopularity}"
+                            android:textColor="@color/green"
+                            android:textSize="14sp"/>
+                        <TextView
+                            android:id="@+id/text_book"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="5dp"
+                            android:background="@drawable/bg_orange_btn"
+                            android:onClick="@{viewModel.onBookNow}"
+                            android:padding="10dp"
+                            android:text="Book Now"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"/>
+                    </RelativeLayout>
                     <TextView
                         android:id="@+id/text_post_duration"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="@{viewModel.runtimeVisibility}"
                         android:layout_marginBottom="8dp"
                         android:text="@{viewModel.movieDuration}"
                         android:textColor="@color/grey_text"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp"
+                        android:visibility="@{viewModel.runtimeVisibility}"/>
 
                     <TextView
                         android:id="@+id/text_post_synopsis"
@@ -85,9 +101,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:text="@{viewModel.movieOverview}"
-                        android:visibility="@{viewModel.overviewVisibility}"
                         android:textColor="@color/grey_text"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp"
+                        android:visibility="@{viewModel.overviewVisibility}"/>
 
                     <TextView
                         android:id="@+id/text_genres"
@@ -95,18 +111,18 @@
                         android:layout_height="wrap_content"
                         android:bufferType="spannable"
                         android:text="@{viewModel.movieGenres}"
-                        android:visibility="@{viewModel.genresVisibility}"
                         android:textColor="@color/green"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp"
+                        android:visibility="@{viewModel.genresVisibility}"/>
                     <TextView
                         android:id="@+id/text_languages"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:bufferType="spannable"
-                        android:visibility="@{viewModel.languagesVisibility}"
                         android:text="@{viewModel.movieSpokenLanguages}"
                         android:textColor="@color/green"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp"
+                        android:visibility="@{viewModel.languagesVisibility}"/>
                 </LinearLayout>
             </RelativeLayout>
         </ScrollView>
