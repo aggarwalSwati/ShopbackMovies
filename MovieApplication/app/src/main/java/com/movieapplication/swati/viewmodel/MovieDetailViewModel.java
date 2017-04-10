@@ -170,9 +170,12 @@ public class MovieDetailViewModel extends BaseObservable
 		if (null != movieDetail.get()) {
 			String url = movieDetail.get().backdrop_path;
 			if (null == movieDetail.get().backdrop_path) {
-				url = movieDetail.get().poster_path == null ? "" : movieDetail.get().poster_path;
+				url = movieDetail.get().poster_path == null
+						? ""
+						: movieDetail.get().poster_path;
 			}
-			return imageBaseUrl + url;
+			if (!TextUtils.isEmpty(url))
+				return imageBaseUrl + url;
 		}
 		return "";
 	}
@@ -184,6 +187,7 @@ public class MovieDetailViewModel extends BaseObservable
 				.placeholder(R.drawable.movie_placeholder)
 				.error(R.drawable.movie_placeholder).into(view);
 	}
+
 	public String getMoviePoster() {
 		return movieDetail.get().backdrop_path;
 	}

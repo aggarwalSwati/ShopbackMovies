@@ -36,7 +36,6 @@ public class DataManager {
 				.dataManagerModule(new DataManagerModule()).build()
 				.inject(this);
 
-
 	}
 
 	public Scheduler getScheduler() {
@@ -46,7 +45,19 @@ public class DataManager {
 	public Observable<MoviesListModel> getMoviesFromServer(int page) {
 		return mFetchService.getListOfMovies(page);
 	}
+
 	public Observable<MovieDetail> getSelectedMovieDetail(int movieId) {
 		return mFetchService.getDetailOfMovie(movieId);
 	}
+
+	/*
+	 * This constructor is provided so we can set up a DataManager with mocks
+	 * from unit test.
+	 */
+	public DataManager(MoviesFetchService watchTowerService,
+			Scheduler subscribeScheduler) {
+		mFetchService = watchTowerService;
+		mSubscribeScheduler = subscribeScheduler;
+	}
+
 }

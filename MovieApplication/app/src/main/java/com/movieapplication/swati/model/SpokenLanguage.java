@@ -23,6 +23,10 @@ public class SpokenLanguage implements Parcelable
 		this.iso_639_1 = in.readString();
 		this.name = in.readString();
 	}
+	public SpokenLanguage(String id, String name ){
+		this.iso_639_1 = id;
+		this.name = name;
+	}
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {

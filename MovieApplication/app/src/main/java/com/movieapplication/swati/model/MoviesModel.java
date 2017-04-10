@@ -45,5 +45,8 @@ public class MoviesModel implements Parcelable {
 		this.id=in.readInt();
 
 	}
+	public MoviesModel(){
+
+	}
 
 }

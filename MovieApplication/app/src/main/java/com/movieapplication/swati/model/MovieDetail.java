@@ -15,6 +15,9 @@ public class MovieDetail extends MoviesModel implements Parcelable {
 	public ArrayList<GenresModel> genres;
 	public ArrayList<SpokenLanguage> spoken_languages;
 
+	public MovieDetail(){
+
+	}
 	protected MovieDetail(Parcel in) {
 		super(in);
 		this.overview = in.readString();

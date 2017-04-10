@@ -19,7 +19,9 @@ import application.movie.swati.com.movieapplication.databinding.LayoutItemMovieB
  * Created by aggarwal.swati on 4/3/17.
  */
 
-public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.AdapterViewHolder> {
+public class MoviesListAdapter
+		extends
+			RecyclerView.Adapter<MoviesListAdapter.AdapterViewHolder> {
 
 	MoviesListModel moviesList;
 
@@ -30,18 +32,19 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Ad
 	}
 
 	@Override
-	public AdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		LayoutItemMovieBinding databinding = DataBindingUtil
-				.inflate(LayoutInflater.from(parent.getContext()), R.layout.layout_item_movie,
-						parent, false);
+	public AdapterViewHolder onCreateViewHolder(ViewGroup parent,
+			int viewType) {
+		LayoutItemMovieBinding databinding = DataBindingUtil.inflate(
+				LayoutInflater.from(parent.getContext()),
+				R.layout.layout_item_movie, parent, false);
 		return new AdapterViewHolder(databinding);
 	}
 
 	@Override
 	public void onBindViewHolder(AdapterViewHolder holder, int position) {
 		LayoutItemMovieBinding postBinding = holder.itemPostbinding;
-		postBinding.setViewModel(
-				new MoviesListViewModel(mContext, moviesList.getMoviesModel().get(position)));
+		postBinding.setViewModel(new MoviesListViewModel(mContext,
+				moviesList.getMoviesModel().get(position)));
 	}
 
 	@Override
@@ -57,7 +60,6 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Ad
 		notifyDataSetChanged();
 	}
 
-
 	public void addItem(MoviesModel list) {
 		if (null != moviesList.getMoviesModel()) {
 			moviesList.getMoviesModel().add(list);
@@ -67,7 +69,8 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Ad
 	}
 
 	public void clearList() {
-		moviesList.getMoviesModel().clear();
+		if (null != moviesList && null!=moviesList.getMoviesModel())
+			moviesList.getMoviesModel().clear();
 	}
 
 	public List<MoviesModel> getAdapterData() {

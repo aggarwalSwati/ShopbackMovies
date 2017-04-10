@@ -19,6 +19,11 @@ public class GenresModel implements Parcelable{
 		this.id = in.readString();
 		this.name = in.readString();
 	}
+
+	public GenresModel(String id, String name) {
+		this.id = id;
+		this.name = name;
+	}
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(this.id);
